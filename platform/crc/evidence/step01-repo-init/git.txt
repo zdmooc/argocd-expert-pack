@@ -1,0 +1,6 @@
+=== git log -1
+3658a5c chore: bootstrap argocd expert pack (preflight + lab01)
+
+=== git status
+## main
+?? platform/crc/evidence/step01-repo-init/
