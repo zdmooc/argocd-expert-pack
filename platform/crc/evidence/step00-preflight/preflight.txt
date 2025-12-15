@@ -1,0 +1,32 @@
+=== DATE
+Mon Dec 15 09:35:54     2025
+=== crc status
+CRC VM:          Running
+OpenShift:       Running (v4.19.3)
+RAM Usage:       13.48GB of 16.76GB
+Disk Usage:      70.28GB of 85.29GB (Inside the CRC VM)
+Cache Usage:     63.67GB
+Cache Directory: C:\Users\HP 17 G3 Win 11 23H2\.crc\cache
+=== oc whoami
+kubeadmin
+=== oc version
+Client Version: 4.19.3
+Kustomize Version: v5.5.0
+Server Version: 4.19.3
+Kubernetes Version: v1.32.5
+=== namespaces
+openshift-gitops                                   Active   13h
+openshift-gitops-operator                          Active   13h
+=== pods
+NAME                                                          READY   STATUS    RESTARTS   AGE   IP            NODE   NOMINATED NODE   READINESS GATES
+cluster-5b5c99d9b9-fw62c                                      1/1     Running   0          13h   10.217.1.66   crc    <none>           <none>
+gitops-plugin-577dfbc76-2jc86                                 1/1     Running   0          13h   10.217.1.67   crc    <none>           <none>
+openshift-gitops-application-controller-0                     1/1     Running   0          12h   10.217.1.99   crc    <none>           <none>
+openshift-gitops-applicationset-controller-57945599ff-4fddl   1/1     Running   0          13h   10.217.1.73   crc    <none>           <none>
+openshift-gitops-dex-server-6f5cffcfb4-plkdt                  1/1     Running   0          13h   10.217.1.74   crc    <none>           <none>
+openshift-gitops-redis-5f46fdf9f9-26r95                       1/1     Running   0          13h   10.217.1.69   crc    <none>           <none>
+openshift-gitops-repo-server-74c6cbfbfd-58sqg                 1/1     Running   0          13h   10.217.1.70   crc    <none>           <none>
+openshift-gitops-server-867599dc85-wwgck                      1/1     Running   0          13h   10.217.1.71   crc    <none>           <none>
+=== route
+NAME                      HOST/PORT                                                   PATH   SERVICES                  PORT    TERMINATION          WILDCARD
+openshift-gitops-server   openshift-gitops-server-openshift-gitops.apps-crc.testing          openshift-gitops-server   https   reencrypt/Redirect   None

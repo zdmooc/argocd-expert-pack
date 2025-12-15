@@ -1,0 +1,17 @@
+# Secrets / credentials (NE JAMAIS committer)
+*.pem
+*.key
+*.p12
+*.pfx
+*.kubeconfig
+kubeconfig
+.env
+**/secrets/
+**/*token*
+**/*secret*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
