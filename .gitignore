@@ -6,9 +6,9 @@
 *.kubeconfig
 kubeconfig
 .env
-**/secrets/
-**/*token*
-**/*secret*
+
+# Convention: secrets réels uniquement sous un dossier secrets/
+**/secrets/**
 
 # OS / IDE
 .DS_Store
