@@ -1,0 +1,7 @@
+=== remote
+origin	https://github.com/zdmooc/argocd-expert-pack.git (fetch)
+origin	https://github.com/zdmooc/argocd-expert-pack.git (push)
+
+=== last commits
+6b132d5 chore: add repo init evidence
+3658a5c chore: bootstrap argocd expert pack (preflight + lab01)
