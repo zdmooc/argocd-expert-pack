@@ -1,0 +1,7 @@
+argocd: v2.12.3+6b9cd82
+  BuildDate: 2024-08-27T12:18:06Z
+  GitCommit: 6b9cd828c6e9807398869ad5ac44efd2c28422d6
+  GitTreeState: clean
+  GoVersion: go1.22.6
+  Compiler: gc
+  Platform: windows/amd64
