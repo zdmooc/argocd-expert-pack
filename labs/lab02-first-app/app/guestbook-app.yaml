@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lab02-guestbook
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/zdmooc/argocd-expert-pack.git
+    targetRevision: main
+    path: labs/lab02-first-app/manifests/guestbook
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: lab02-guestbook
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

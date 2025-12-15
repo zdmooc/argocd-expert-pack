@@ -1,0 +1,1 @@
+application.argoproj.io/lab02-guestbook created
