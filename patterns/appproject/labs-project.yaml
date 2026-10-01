@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: expert-labs
+  namespace: openshift-gitops
+spec:
+  description: Bounded project for Argo CD expert labs
+  sourceRepos:
+    - https://github.com/zdmooc/argocd-expert-pack.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: lab-*
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
