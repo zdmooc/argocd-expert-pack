@@ -93,21 +93,25 @@ echo "ARGOCD_SELF_HEAL=PASS"
 echo "== Switch desired state from v2 to v1"
 kubectl -n argocd patch application runtime-self-heal --type merge   -p '{"spec":{"source":{"path":"labs/runtime-ci/versions/v1"}}}'
 
-wait_app Synced Healthy 120
-kubectl -n runtime-argocd rollout status deployment/runtime-demo --timeout=180s
-
-version="$(kubectl -n runtime-argocd get deploy runtime-demo -o jsonpath='{.spec.template.spec.containers[0].env[?(@.name=="APP_VERSION")].value}')"
-test "$version" = "v1"
-
-pruned=0
-for i in $(seq 1 60); do
+rollback_ready=0
+for i in $(seq 1 120); do
+  sync="$(kubectl -n argocd get application runtime-self-heal -o jsonpath='{.status.sync.status}' 2>/dev/null || true)"
+  health="$(kubectl -n argocd get application runtime-self-heal -o jsonpath='{.status.health.status}' 2>/dev/null || true)"
+  version="$(kubectl -n runtime-argocd get deploy runtime-demo -o jsonpath='{.spec.template.spec.containers[0].env[?(@.name=="APP_VERSION")].value}' 2>/dev/null || true)"
+  marker="present"
   if ! kubectl -n runtime-argocd get configmap prune-marker >/dev/null 2>&1; then
-    pruned=1
+    marker="absent"
+  fi
+  echo "rollback sync=$sync health=$health version=$version marker=$marker"
+  if [[ "$sync" == "Synced" && "$health" == "Healthy" && "$version" == "v1" && "$marker" == "absent" ]]; then
+    rollback_ready=1
     break
   fi
   sleep 2
 done
-test "$pruned" -eq 1
+
+test "$rollback_ready" -eq 1
+kubectl -n runtime-argocd rollout status deployment/runtime-demo --timeout=180s
 
 echo "ARGOCD_PRUNE=PASS"
 echo "ARGOCD_DESIRED_STATE_ROLLBACK=PASS"
