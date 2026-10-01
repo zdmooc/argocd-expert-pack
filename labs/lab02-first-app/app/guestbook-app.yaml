@@ -4,7 +4,7 @@ metadata:
   name: lab02-guestbook
   namespace: openshift-gitops
 spec:
-  project: default
+  project: expert-labs
   source:
     repoURL: https://github.com/zdmooc/argocd-expert-pack.git
     targetRevision: main
@@ -17,4 +17,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
