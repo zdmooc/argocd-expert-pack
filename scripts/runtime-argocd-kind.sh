@@ -48,7 +48,7 @@ kubectl wait --for=condition=Ready node --all --timeout=120s
 echo "== Install Argo CD $ARGOCD_VERSION"
 kubectl create namespace argocd
 curl -fsSL   "https://raw.githubusercontent.com/argoproj/argo-cd/$ARGOCD_VERSION/manifests/install.yaml"   -o /tmp/argocd-install.yaml
-kubectl apply -n argocd -f /tmp/argocd-install.yaml
+kubectl apply --server-side --force-conflicts -n argocd -f /tmp/argocd-install.yaml
 
 kubectl -n argocd rollout status deployment/argocd-repo-server --timeout=240s
 kubectl -n argocd rollout status deployment/argocd-server --timeout=240s
