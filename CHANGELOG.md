@@ -1,16 +1,23 @@
 # Changelog
 
-## 2026-10-01 — O5 refactor in progress
+## 2026-10-01 — O5 complete
 
 - evidence truth established;
 - historical CRC evidence classified;
 - Lab02 overclaim removed;
 - docs 01→09 completed;
-- patterns added: AppProject, Application, App-of-Apps, ApplicationSet, sync waves, ignoreDifferences, six-file convention;
-- operational runbooks added;
+- AppProject/Application/App-of-Apps/ApplicationSet/sync-wave/diff patterns added;
+- operations runbooks added;
 - Labs 03→09 added;
-- Lab02 hardened with Synced/Healthy verifier;
-- Lab01 upgraded to evidence-grade OpenShift GitOps verification;
-- static GitHub Actions CI added and passing;
-- Kind runtime lab added with pinned Argo CD v3.5.3;
-- fresh CRC evidence gate added.
+- Lab01 and Lab02 verification hardened;
+- static GitHub Actions CI implemented and proven;
+- pinned Argo CD v3.5.3 Kind runtime implemented;
+- server-side CRD installation fixed;
+- runtime proof observed:
+  - Synced/Healthy;
+  - drift;
+  - self-heal;
+  - prune;
+  - desired-state rollback v2→v1;
+- fresh CRC evidence gate added;
+- repository promoted to O5 COMPLETE.
