@@ -1,0 +1,43 @@
+name: Argo CD Runtime Proof
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "labs/runtime-ci/**"
+      - "scripts/runtime-argocd-kind.sh"
+      - ".github/workflows/runtime.yml"
+  pull_request:
+    paths:
+      - "labs/runtime-ci/**"
+      - "scripts/runtime-argocd-kind.sh"
+      - ".github/workflows/runtime.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: v1.31.0
+
+      - name: Install Kind
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/bin"
+          curl -fsSLo "$RUNNER_TEMP/bin/kind"             https://kind.sigs.k8s.io/dl/v0.24.0/kind-linux-amd64
+          chmod +x "$RUNNER_TEMP/bin/kind"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+
+      - name: Execute real Argo CD runtime proof
+        env:
+          ARGOCD_VERSION: v3.5.3
+        run: bash scripts/runtime-argocd-kind.sh
