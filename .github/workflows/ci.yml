@@ -1,0 +1,60 @@
+name: Argo CD Expert Pack CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install validation dependencies
+        run: pip install --disable-pip-version-check -r requirements-ci.txt
+
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: v1.31.0
+
+      - name: Validate active Argo CD surface
+        run: python scripts/validate-static.py
+
+      - name: Lint YAML and shell
+        run: |
+          yamllint -c .yamllint.yml patterns labs/lab02-first-app labs/runtime-ci .github/workflows
+          bash -n scripts/*.sh
+          bash -n labs/lab01-install-openshift-gitops/verify.sh
+          bash -n labs/lab02-first-app/verify.sh
+
+      - name: Render Kustomize assets
+        run: bash scripts/render-active.sh
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24.x"
+
+      - name: Install kubeconform
+        run: |
+          go install github.com/yannh/kubeconform/cmd/kubeconform@v0.6.7
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - name: Validate rendered Kubernetes resources
+        run: |
+          kubeconform -strict -summary build/lab02-guestbook.yaml
+          kubeconform -strict -summary build/sync-waves.yaml
+          kubeconform -strict -summary build/runtime-v1.yaml
+          kubeconform -strict -summary build/runtime-v2.yaml
+
+      - name: Secret hygiene
+        run: |
+          ! grep -R -nE '(password:|token:|privateKey:|BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY)'             patterns labs/runtime-ci labs/lab02-first-app --include='*.yaml' --include='*.yml'
