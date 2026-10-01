@@ -110,3 +110,15 @@ Complete docs 01→09:
 - `PRODUCTION_REFERENCE`
 
 No static manifest is promoted to runtime evidence.
+
+## Completion
+
+O5 completed on 2026-10-01.
+
+Evidence:
+- static CI `36869095275` SUCCESS;
+- real Argo CD Kind runtime `36869095353` SUCCESS;
+- Argo CD v3.5.3;
+- Synced/Healthy, drift, self-heal, prune and desired-state rollback observed.
+
+Current CRC remains a separate `NOT_PROVEN` promotion gate.
