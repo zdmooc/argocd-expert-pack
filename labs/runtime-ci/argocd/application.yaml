@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: runtime-self-heal
+  namespace: argocd
+spec:
+  project: runtime-labs
+  source:
+    repoURL: https://github.com/zdmooc/argocd-expert-pack.git
+    targetRevision: main
+    path: labs/runtime-ci/versions/v2
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: runtime-argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
