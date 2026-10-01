@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook-environments
+  namespace: openshift-gitops
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            namespace: lab-appset-dev
+          - env: preprod
+            namespace: lab-appset-preprod
+  template:
+    metadata:
+      name: 'guestbook-{{env}}'
+    spec:
+      project: expert-labs
+      source:
+        repoURL: https://github.com/zdmooc/argocd-expert-pack.git
+        targetRevision: main
+        path: labs/lab02-first-app/manifests/guestbook
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
