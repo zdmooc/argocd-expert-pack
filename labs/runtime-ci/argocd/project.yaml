@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: runtime-labs
+  namespace: argocd
+spec:
+  sourceRepos:
+    - https://github.com/zdmooc/argocd-expert-pack.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: runtime-argocd
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
