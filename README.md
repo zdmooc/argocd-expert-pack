@@ -1,99 +1,99 @@
 # Argo CD Expert Pack — OpenShift GitOps
 
-Référentiel d'apprentissage, de patterns, de runbooks et de labs pour Argo CD et OpenShift GitOps.
+Référentiel d’apprentissage, de patterns, de runbooks et de labs pour Argo CD et OpenShift GitOps.
 
 ## Status
 
-**O5 — STATIC_VALIDATED / RUNTIME KIND PROOF IN PROGRESS / CURRENT CRC NOT_PROVEN**
+**O5 COMPLETE — STATIC_VALIDATED + CI_RUNTIME_PROVEN_ARGOCD_KIND + HISTORICAL_CRC_PROVEN / CURRENT CRC PENDING**
 
-## Scope
+## Canonical scope
 
-This repository owns:
-- Argo CD core concepts;
+This repository owns Argo CD/OpenShift GitOps expertise:
 - Application / AppProject / ApplicationSet;
-- sync, health, drift and self-heal;
-- prune governance;
-- sync waves and hooks;
+- sync and health;
+- drift / self-heal;
+- prune;
+- sync waves/hooks;
+- diff customization;
 - repository/TLS troubleshooting;
-- multi-tenancy/RBAC patterns;
+- multi-tenancy/RBAC;
 - GitOps rollback mechanics;
-- OpenShift GitOps labs and evidence.
+- OpenShift GitOps labs/evidence.
 
-It does not own cluster provisioning, common platform services or business workloads.
+It does not own cluster provisioning, shared platform services or business workloads.
 
 ## Structure
 
 ```text
 docs/           expert learning path 00→09
-labs/           progressive exercises + historical evidence
+labs/           progressive labs + runtime CI fixture
 patterns/       reusable Argo CD patterns
-runbooks/       operations / troubleshooting
-platform/crc/   historical CRC evidence + fresh CRC gate
-evidence/       claim/evidence matrix
-scripts/        validation and Kind runtime proof
+runbooks/       day-2 operations
+platform/crc/   historical evidence + fresh CRC gate
+evidence/       claim/evidence records
+scripts/        static validation + Kind runtime
 .github/        static CI + real Argo CD runtime CI
 ```
 
-## Evidence already established
+## Proven baseline
 
-### Historical CRC / OpenShift GitOps
+### Static
 
-Stored evidence shows a previous CRC/OpenShift GitOps installation:
-- OpenShift Local running;
-- `openshift-gitops` namespace;
-- Argo CD pods Running;
-- ArgoCD CR present;
-- OpenShift Route present.
+Run `36869095275` — **SUCCESS**  
+Commit `ffdd6601c205a95014f3cbae7e5fa490f1074d18`.
 
-Historical preflight date: **2025-12-15**.
+### Real Argo CD runtime on Kind
 
-Claim:
+Run `36869095353` — **SUCCESS**  
+Argo CD `v3.5.3`.
+
+Observed:
+
+```text
+ARGOCD_INSTALL_KIND=PASS
+ARGOCD_SYNC_HEALTH=PASS
+ARGOCD_DRIFT_INJECTED=PASS
+ARGOCD_SELF_HEAL=PASS
+ARGOCD_PRUNE=PASS
+ARGOCD_DESIRED_STATE_ROLLBACK=PASS
+CI_RUNTIME_PROVEN_ARGOCD_KIND=PASS
+```
+
+The rollback step finished with:
+
+```text
+sync=Synced health=Healthy version=v1 marker=absent
+```
+
+## CRC/OpenShift evidence
+
+Historical evidence proves an earlier OpenShift GitOps installation on CRC, with a stored preflight dated **2025-12-15**.
+
+Allowed historical claim:
 `HISTORICAL_CRC_OPENSHIFT_GITOPS_INSTALL_PROVEN`.
 
-This is not a claim about current CRC state.
-
-### Static CI
-
-The repository has automated validation for:
-- YAML;
-- Kustomize rendering;
-- shell syntax;
-- Argo CD source/namespace conventions;
-- secret hygiene;
-- Kubernetes schemas for native resources.
-
-## Runtime CI
-
-`scripts/runtime-argocd-kind.sh` installs a real pinned **Argo CD v3.5.3** on an ephemeral Kind cluster.
-
-The runtime gate attempts to prove:
-- Synced/Healthy;
-- drift injection;
-- self-heal;
-- prune;
-- desired-state rollback from v2 to v1.
-
-The claim is promoted only after a successful observed workflow run.
-
-## OpenShift / CRC
-
-For a fresh CRC proof, use:
-- `labs/lab01-install-openshift-gitops/verify.sh`;
-- Lab02→Lab09;
-- `platform/crc/EVIDENCE_TEMPLATE.md`.
-
-Current fresh CRC claim:
+Current CRC/OpenShift claim:
 `NOT_PROVEN`.
 
-## Learning path
+A fresh promotion path exists under `platform/crc/` and Lab01→Lab09.
 
-Start with `docs/README.md`, then execute the labs in numerical order.
+## Evidence boundaries
+
+Not runtime-proven on current CRC:
+- fresh Lab02 Synced/Healthy;
+- AppProject negative isolation;
+- ApplicationSet generation;
+- sync-wave ordering.
+
+Not claimed:
+- HA Argo CD;
+- production GitOps readiness;
+- production client topology.
+
+## Start
+
+Read `docs/README.md`, then execute Labs 01→09.
 
 ## Safety
 
-Never commit:
-- kubeconfig;
-- passwords/tokens;
-- repository credentials;
-- private keys;
-- unredacted internal infrastructure evidence.
+Never commit credentials, kubeconfigs, private keys, unredacted tokens or private infrastructure evidence.
