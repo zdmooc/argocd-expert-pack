@@ -31,7 +31,7 @@ jobs:
 
       - name: Lint YAML and shell
         run: |
-          yamllint -c .yamllint.yml patterns labs/lab02-first-app labs/runtime-ci .github/workflows
+          yamllint -c .yamllint.yml             patterns             labs/lab02-first-app             labs/runtime-ci             .github/workflows
           bash -n scripts/*.sh
           bash -n labs/lab01-install-openshift-gitops/verify.sh
           bash -n labs/lab02-first-app/verify.sh
@@ -57,4 +57,5 @@ jobs:
 
       - name: Secret hygiene
         run: |
-          ! grep -R -nE '(password:|token:|privateKey:|BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY)'             patterns labs/runtime-ci labs/lab02-first-app --include='*.yaml' --include='*.yml'
+          pattern='(password:|token:|privateKey:|BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY)'
+          ! grep -R -nE "$pattern"             patterns             labs/runtime-ci             labs/lab02-first-app             --include='*.yaml'             --include='*.yml'
