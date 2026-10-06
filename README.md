@@ -35,6 +35,15 @@ scripts/        static validation + Kind runtime
 .github/        static CI + real Argo CD runtime CI
 ```
 
+## D-098 — SQY mission reuse
+
+D-098 reuses this repository for deep GitOps evidence rather than repeating destructive tests.
+
+Mission mapping:
+- `docs/10-d098-sqy-gitops-evidence-reuse.md`.
+
+Generic Argo mechanics are already runtime-proven on Kind; bounded OpenShift reconciliation evidence is referenced from D-093/K1.
+
 ## Proven baseline
 
 ### Static
